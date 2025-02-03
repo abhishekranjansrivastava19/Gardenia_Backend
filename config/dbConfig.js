@@ -11,17 +11,19 @@
 //     },
 //   };
 
-  module.exports = {
-    // Metadata database configuration
-    metadataDBConfig: {
-      user: 'dpsuser', // Your database username
-      password: 'dps@123', // Your database password
-      server: "250.242.203.229", // Your database server IP address
-      database: "GardeniaRegistrationPortal", // Your database name
-      options: {
-        trustedConnection: true,
-      },
+module.exports = {
+  // Metadata database configuration
+  metadataDBConfig: {
+    user: "dpsuser",
+    password: "dps@123",
+    server: "150.242.203.229", // SQL Server address
+    database: "GardeniaRegistrationPortal",
+    options: {
+      encrypt: false, // Set to true if using Azure
+      enableArithAbort: true,
+      multipleActiveResultSets: true,
     },
-  };
+  },
+};
 
 // Function to
