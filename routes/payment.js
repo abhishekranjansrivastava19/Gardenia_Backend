@@ -465,7 +465,8 @@ router.post("/oldStudent/payment_verify", async (req, res) => {
       pool.close();
 
       res.redirect(
-        `http://localhost:3001/${studentId}/studentPanel/reciept?orderId=${orderId}`
+        // `http://localhost:3001/${studentId}/studentPanel/reciept?orderId=${orderId}`
+        `http://admission.dpserp.com/${studentId}/studentPanel/reciept?orderId=${orderId}`
       );
     } else {
       res.status(500).json({ message: "failed" });
