@@ -10,7 +10,8 @@ const paymentRoutes = require("./routes/payment");
 const transactionRoutes = require("./routes/transactiondb");
 const marksRoutes = require("./routes/marksfeed");
 const noticeRoutes = require("./routes/notice");
-const sql = require("mssql/msnodesqlv8");
+// const sql = require("mssql/msnodesqlv8");
+const sql = require("mssql");
 require('dotenv/config');
 
 const app = express();

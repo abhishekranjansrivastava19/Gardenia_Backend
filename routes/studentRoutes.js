@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const config = require("../config/dbConfig");
-const sql = require("mssql/msnodesqlv8");
+const sql = require("mssql");
+// const sql = require("mssql/msnodesqlv8");
 const jwt = require("jsonwebtoken");
 
 router.get("/:id", async (req, res) => {

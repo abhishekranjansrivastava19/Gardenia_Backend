@@ -1,6 +1,7 @@
 const express = require("express");
 const multer = require("multer");
-const sql = require("mssql/msnodesqlv8");
+// const sql = require("mssql/msnodesqlv8");
+const sql = require("mssql");
 const crypto = require("crypto");
 const Razorpay = require("razorpay");
 const config = require("../config/dbConfig");

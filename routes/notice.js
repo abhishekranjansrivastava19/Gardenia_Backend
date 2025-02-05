@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const sql = require("mssql/msnodesqlv8");
+const sql = require("mssql");
+// const sql = require("mssql/msnodesqlv8");
 const config = require("../config/dbConfig");
 
 router.post("/", async (req, res) => {
