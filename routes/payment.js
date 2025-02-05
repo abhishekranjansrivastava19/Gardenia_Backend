@@ -237,7 +237,7 @@ router.post("/payment_verify", async (req, res) => {
     req.body;
 
   const orderId = req.query.orderId;
-  const registrationAmt = req.query.registrationAmt/100;
+  const registrationAmt = req.query.registrationAmt;
   
   try {
     const sign = razorpay_order_id + "|" + razorpay_payment_id;
