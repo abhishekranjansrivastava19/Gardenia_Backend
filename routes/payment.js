@@ -382,7 +382,7 @@ router.post("/payment_verify", async (req, res) => {
         .input("orderId", sql.VarChar(100), orderId)
         .input("razorpay_order_id", sql.VarChar(100), razorpay_order_id)
         .input("razorpay_payment_id", sql.VarChar(100), razorpay_payment_id)
-        .input("registrationAmt", sql.VarChar(50), registrationAmt)
+        .input("registrationAmt", sql.Decimal(10, 2), registrationAmt/100)
         .input("transactionDate", sql.DateTime, transactionDate)
         .query(insertTransactionQuery);
 
@@ -456,7 +456,7 @@ router.post("/oldStudent/payment_verify", async (req, res) => {
         .input("orderId", sql.NVarChar, orderId)
         .input("razorpay_order_id", sql.NVarChar, razorpay_order_id)
         .input("razorpay_payment_id", sql.NVarChar, razorpay_payment_id)
-        .input("registrationAmt", sql.Decimal(10, 2), registrationAmt) // Assuming registrationAmt is a decimal
+        .input("registrationAmt", sql.Decimal(10, 2), registrationAmt/100) // Assuming registrationAmt is a decimal
         .input("transactionDate", sql.DateTime, transactionDate) // Current date and time
         .query(`
                   INSERT INTO dbo.transactionDb (studentId, orderId, razorpay_order_id, razorpay_payment_id, registrationAmt, transactionDate)
