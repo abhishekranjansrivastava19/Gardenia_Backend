@@ -37,8 +37,8 @@ app.use(
 );
 // Start the server
 const PORT = 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on port  http://localhost:${PORT}`);
+app.listen(process.env.PORT, () => {
+  console.log(`Server running on port  http://localhost:3000`);
 });
 
 
