@@ -96,6 +96,7 @@ router.get("/getVerified/:id", async (req, res) => {
           sm.isAdmin,
           sm.userRole,
           sm.classId,
+          sm.rollNo,
           sm.paymentStatus,
           c.className AS className,
           c.classType AS classType,
