@@ -90,8 +90,6 @@ router.post("/feedAll", async (req, res) => {
         totalMarks >= 40
       ) {
         status = true;
-      } else {
-        status = false;
       }
 
       // Upsert (Insert if not exists, update if exists)
