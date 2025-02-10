@@ -135,10 +135,10 @@ router.put("/:studentId/update", async (req, res) => {
 
     // Check if any subject has less than 8 marks or if percentage is below 40
     if (
-      Math.round(english) >= 8 || 
-      Math.round(hindi) >= 8 || 
-      Math.round(maths) >= 8 || 
-      Math.round(science) >= 8 || 
+      Math.round(english) >= 8 && 
+      Math.round(hindi) >= 8 && 
+      Math.round(maths) >= 8 &&
+      Math.round(science) >= 8 && 
       percentage >= 40
     ) {
       status = true; // Fail if any condition is violated
