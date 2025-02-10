@@ -74,7 +74,8 @@ router.get("/db/:studentId", async (req, res) => {
           c.classId,
           c.className,
           s.stream,
-          s.scholarNo
+          s.scholarNo,
+          s.isOld
         FROM 
           transactionDb t
         JOIN 
