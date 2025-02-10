@@ -78,16 +78,10 @@ router.post("/feedAll", async (req, res) => {
           .json({ message: `Student ID ${studentId} not found` });
       }
 
-      // const minMarksPerSubject = 8;
-      // const maxMarksPerSubject = 25;
-      // const totalMaxMarks = 100; // 4 subjects * 25 marks = 100
+    
       const totalMarks = english + hindi + maths + science;
-      // const percentage = (totalMarks / totalMaxMarks) * 100;
 
-      // console.log("Max Marks:", maxMarks);
-      // console.log("Percentage:", percentage);
-
-      let status;
+      let status = false;
       if (
         english >= 8 ||
         hindi >= 8 ||
@@ -95,9 +89,9 @@ router.post("/feedAll", async (req, res) => {
         science >= 8 ||
         totalMarks >= 40
       ) {
-        status = false;
-      } else {
         status = true;
+      } else {
+        status = false;
       }
 
       // Upsert (Insert if not exists, update if exists)
@@ -134,7 +128,7 @@ router.put("/:studentId/update", async (req, res) => {
     const { english, hindi, maths, science } = req.body;
 
     // Calculate the new status based on the provided marks
-    let status = true; // Default is pass
+    let status = false; // Default is pass
 
     // Round marks and calculate the total
     const totalMarks = english + hindi + maths + science;
@@ -143,13 +137,13 @@ router.put("/:studentId/update", async (req, res) => {
 
     // Check if any subject has less than 8 marks or if percentage is below 40
     if (
-      Math.round(english) < 8 || 
-      Math.round(hindi) < 8 || 
-      Math.round(maths) < 8 || 
-      Math.round(science) < 8 || 
-      percentage < 40
+      Math.round(english) >= 8 || 
+      Math.round(hindi) >= 8 || 
+      Math.round(maths) >= 8 || 
+      Math.round(science) >= 8 || 
+      percentage >= 40
     ) {
-      status = false; // Fail if any condition is violated
+      status = true; // Fail if any condition is violated
     }
 
     const pool = await sql.connect(config.metadataDBConfig);
