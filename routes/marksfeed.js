@@ -78,18 +78,17 @@ router.post("/feedAll", async (req, res) => {
           .json({ message: `Student ID ${studentId} not found` });
       }
 
-    
       const totalMarks = english + hindi + maths + science;
 
-      let status = false;
+      let status = false; // Default to fail
       if (
-        english >= 8 ||
-        hindi >= 8 ||
-        maths >= 8 ||
-        science >= 8 ||
+        english >= 8 &&
+        hindi >= 8 &&
+        maths >= 8 &&
+        science >= 8 &&
         totalMarks >= 40
       ) {
-        status = true;
+        status = true; // Pass only if both conditions are met
       }
 
       // Upsert (Insert if not exists, update if exists)
@@ -123,25 +122,30 @@ router.post("/feedAll", async (req, res) => {
 router.put("/:studentId/update", async (req, res) => {
   try {
     const { studentId } = req.params;
-    const { english, hindi, maths, science } = req.body;
+    let { english, hindi, maths, science } = req.body;
 
-    // Calculate the new status based on the provided marks
-    let status = false; // Default is pass
+    english = Number(english);
+    hindi = Number(hindi);
+    maths = Number(maths);
+    science = Number(science);
 
-    // Round marks and calculate the total
+    if (isNaN(english) || isNaN(hindi) || isNaN(maths) || isNaN(science)) {
+      return res.status(400).json({ message: "Invalid marks input" });
+    }
+
     const totalMarks = english + hindi + maths + science;
-    const maxMarks = 25 * 4; // 4 subjects, each with max marks of 25
+    const maxMarks = 25 * 4;
     const percentage = (totalMarks / maxMarks) * 100;
 
-    // Check if any subject has less than 8 marks or if percentage is below 40
+    let status = false; // Default to fail
     if (
-      Math.round(english) >= 8 && 
-      Math.round(hindi) >= 8 && 
-      Math.round(maths) >= 8 &&
-      Math.round(science) >= 8 && 
+      english >= 8 &&
+      hindi >= 8 &&
+      maths >= 8 &&
+      science >= 8 &&
       percentage >= 40
     ) {
-      status = true; // Fail if any condition is violated
+      status = true; // Pass only if both conditions are met
     }
 
     const pool = await sql.connect(config.metadataDBConfig);
@@ -158,10 +162,10 @@ router.put("/:studentId/update", async (req, res) => {
       .query(`
         UPDATE marksheetMaster
         SET 
-          english = ISNULL(@english, english), 
-          hindi = ISNULL(@hindi, hindi), 
-          maths = ISNULL(@maths, maths), 
-          science = ISNULL(@science, science),
+          english = @english, 
+          hindi = @hindi, 
+          maths = @maths, 
+          science = @science,
           status = @status
         WHERE studentId = @studentId
       `);
@@ -172,7 +176,6 @@ router.put("/:studentId/update", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
-
 
 router.get("/:studentId", async (req, res) => {
   try {
@@ -200,7 +203,6 @@ router.get("/:studentId", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
-
 
 router.get("/get/qualified_count", async (req, res) => {
   try {
@@ -232,6 +234,5 @@ router.get("/get/qualified_count", async (req, res) => {
     });
   }
 });
-
 
 module.exports = router;
